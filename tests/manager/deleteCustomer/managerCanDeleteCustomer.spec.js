@@ -1,7 +1,12 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
+import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage';
+import { generateCustomerData } from '../../../utils/customerFactory';
+import { CustomersListPage } from '../../../src/pages/manager/CustomersListPage';
+
+let customerData;
 
 test.beforeEach(async ({ page }) => {
+
   /* 
   Pre-conditons:
   1. Open Add Customer page.
@@ -10,6 +15,13 @@ test.beforeEach(async ({ page }) => {
   4. Fill the Postal Code.
   5. Click [Add Customer].
   */
+
+  const addCustPage = new AddCustomerPage(page);
+
+  customerData = generateCustomerData();
+
+  await addCustPage.open()
+  await addCustPage.addCustomer(customerData);
 });
 
 test('Assert manager can delete customer', async ({ page }) => {
@@ -21,4 +33,12 @@ test('Assert manager can delete customer', async ({ page }) => {
   4. Reload the page.
   5. Assert customer row is not present in the table. 
   */
+
+  const custListPage = new CustomersListPage(page);
+
+  await custListPage.open();
+  await custListPage.deleteLastCustomer();
+  await custListPage.assertCustomerIsAbsent(customerData);
+  await custListPage.reload();
+  await custListPage.assertCustomerIsAbsent(customerData);
 });

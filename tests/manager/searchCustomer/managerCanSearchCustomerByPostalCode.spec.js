@@ -1,9 +1,9 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
+import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage';
+import { generateCustomerData } from '../../../utils/customerFactory';
+import { CustomersListPage } from '../../../src/pages/manager/CustomersListPage';
 
-let firstName;
-let lastName;
-let postalCode;
+let customerData;
 
 test.beforeEach(async ({ page }) => {
   /* 
@@ -14,17 +14,28 @@ test.beforeEach(async ({ page }) => {
   4. Fill the Postal Code.
   5. Click [Add Customer].
   */
-  firstName = faker.person.firstName();
-  lastName = faker.person.lastName();
-  postalCode = faker.location.zipCode();
+
+  const addCustPage = new AddCustomerPage(page);
+
+  customerData = generateCustomerData();
+
+  await addCustPage.open()
+  await addCustPage.addCustomer(customerData);
+  await addCustPage.reload();
 });
 
-test('Assert manager can search customer by Postal Code', async ({ page }) => {
+test('Assert manager can search customer by First Name', async ({ page }) => {
   /* 
   Test:
   1. Open Customers page.
-  2. Fill the postalCode to the search field
+  2. Fill the postal code to the search field
   3. Assert customer row is present in the table. 
   4. Assert no other rows is present in the table.
   */
+
+  const custListPage = new CustomersListPage(page);
+
+  await custListPage.open();
+  await custListPage.fillSearchField(customerData.postCode);
+  await custListPage.assertCustomerFound(customerData.postCode);
 });

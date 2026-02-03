@@ -1,0 +1,9 @@
+import { faker } from '@faker-js/faker';
+
+export function generateCustomerData() {
+    return {
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        postCode: faker.location.zipCode()
+    };
+}

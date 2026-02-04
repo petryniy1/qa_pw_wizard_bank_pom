@@ -15,21 +15,42 @@ export class OpenAccountPage {
     );
   }
 
+  async selectCustomer(customerData) {
+    const fullName = `${customerData.firstName} ${customerData.lastName}`;
+    await this.customersDrop.selectOption({ label: fullName });
+  }
+
   async selectCurrencyFromDrop(currencyName) {
     await this.currencyDrop.selectOption({ label: currencyName });
   }
 
   async assertCurrencyValue(currencyName) {
-    await expect(this.currencyDrop.locator('option:checked'))
-      .toHaveText(currencyName);
+    await expect(this.currencyDrop.locator('option:checked')).toHaveText(currencyName);
   }
 
-  async addAccountNumberToCustomerFromDrop(
-    customerData, currencyName) {
-    const fullName = `${customerData.firstName} ${customerData.lastName}`;
-    await this.customersDrop.selectOption({ label: fullName });
+  async addAccountNumberToCustomerFromDrop(customerData, currencyName) {
+    await this.selectCustomer(customerData);
     await this.selectCurrencyFromDrop(currencyName);
     await this.processButton.click();
+  }
+
+  async processAndGetAccountNumber() {
+    return new Promise(resolve => {
+      this.page.once('dialog', async dialog => {
+        const message = dialog.message();
+        const match = message.match(/\d+/);
+        const accountNumber = match ? match[0] : null;
+        await dialog.accept();
+        resolve(accountNumber);
+      });
+      this.processButton.click();
+    });
+  }
+
+  async createAccountAndGetNumber(customerData, currencyName) {
+    await this.selectCustomer(customerData);
+    await this.selectCurrencyFromDrop(currencyName);
+    return await this.processAndGetAccountNumber();
   }
 
   async reload() {

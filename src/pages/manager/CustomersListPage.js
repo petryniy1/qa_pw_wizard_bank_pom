@@ -29,10 +29,11 @@ export class CustomersListPage {
     await expect(lastCustomer.locator('td').nth(3)).toHaveText('');
   }
 
-  async assertLastCustomerHasAccountNumber() {
+  async assertCustomerHasAccountNumber(expectedNumber) {
     const lastCustomer = this.customersList.last();
+    const accountCell = lastCustomer.locator('td').nth(3);
 
-    await expect(lastCustomer.locator('td').nth(3)).not.toHaveText('');
+    await expect(accountCell).toHaveText(expectedNumber);
   }
 
   async deleteLastCustomer() {

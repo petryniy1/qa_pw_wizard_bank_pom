@@ -45,9 +45,13 @@ test('Assert manager can open account for a new customer', async ({ page }) => {
   const custListPage = new CustomersListPage(page);
 
   await addCustPage.clickOpenAccountButton();
-  await openAccountPage.addAccountNumberToCustomerFromDrop(
-    customerData, 'Dollar');
+
+  const accountNumber = await openAccountPage.createAccountAndGetNumber(
+    customerData,
+    'Dollar'
+  );
+
   await openAccountPage.reload();
   await openAccountPage.clickCustomersButton();
-  await custListPage.assertLastCustomerHasAccountNumber('1016');
+  await custListPage.assertCustomerHasAccountNumber(accountNumber);
 });

@@ -6,7 +6,7 @@ test('Should show validation error for empty required fields',
         const addCustPage = new AddCustomerPage(page);
 
         await addCustPage.open()
-        await addCustPage.addFakeCustomer(
+        await addCustPage.addCustomer(
             {
                 firstName: '',
                 lastName: 'Granger',
@@ -14,18 +14,18 @@ test('Should show validation error for empty required fields',
             });
 
         await addCustPage.expectFieldInvalid(addCustPage.firstName);
-        await addCustPage.addFakeCustomer(
+        await addCustPage.addCustomer(
             {
                 firstName: 'Hermoine',
                 lastName: '',
                 postCode: 'E859AB'
             });
         await addCustPage.expectFieldInvalid(addCustPage.lastName);
-        await addCustPage.addFakeCustomer(
+        await addCustPage.addCustomer(
             {
                 firstName: 'Hermoine',
                 lastName: 'Granger',
-                postCode: 'E859AB'
+                postCode: ''
             });
         await addCustPage.expectFieldInvalid(addCustPage.postCode);
 

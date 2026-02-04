@@ -15,7 +15,7 @@ export class OpenAccountPage {
     );
   }
 
-  async selectCurrensyFromDrop(currencyName) {
+  async selectCurrencyFromDrop(currencyName) {
     await this.currencyDrop.selectOption({ label: currencyName });
   }
 
@@ -28,7 +28,7 @@ export class OpenAccountPage {
     customerData, currencyName) {
     const fullName = `${customerData.firstName} ${customerData.lastName}`;
     await this.customersDrop.selectOption({ label: fullName });
-    await this.selectCurrensyFromDrop(currencyName);
+    await this.selectCurrencyFromDrop(currencyName);
     await this.processButton.click();
   }
 

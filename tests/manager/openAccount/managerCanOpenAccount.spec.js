@@ -25,7 +25,7 @@ test.beforeEach(async ({ page }) => {
   await addCustPage.reload();
 });
 
-test('Assert manager can add new customer', async ({ page }) => {
+test('Assert manager can open account for a new customer', async ({ page }) => {
   /* 
   Test:
   1. Click [Open Account].
@@ -49,5 +49,5 @@ test('Assert manager can add new customer', async ({ page }) => {
     customerData, 'Dollar');
   await openAccountPage.reload();
   await openAccountPage.clickCustomersButton();
-  await custListPage.assertLastCustomerParameters(customerData);
+  await custListPage.assertLastCustomerHasAccountNumber('1016');
 });

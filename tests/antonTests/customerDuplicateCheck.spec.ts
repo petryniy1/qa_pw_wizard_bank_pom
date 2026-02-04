@@ -7,13 +7,20 @@ test('Should show alert when adding duplicate customer',
 
         await addCustPage.open()
 
-        await addCustPage.addFakeCustomer(
+        await addCustPage.addCustomer(
             {
-                firstName: 'Hermoine',
-                lastName: 'Granger',
-                postCode: 'E859AB'
+                firstName: 'Anton',
+                lastName: 'Sialitski',
+                postCode: '1234'
             });
-        
+
+        await addCustPage.addCustomer(
+            {
+                firstName: 'Anton',
+                lastName: 'Sialitski',
+                postCode: '1234'
+            });
+
         expect(addCustPage.lastAlertMessage)
             .toContain('Customer may be duplicate');
     });

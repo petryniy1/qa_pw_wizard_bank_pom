@@ -11,14 +11,28 @@ export class CustomersListPage {
     await this.page.goto('/angularJs-protractor/BankingProject/#/manager/list');
   }
 
-  async assertLastCustomerParameters(
-    { firstName, lastName, postCode }) {
+  async assertLastCustomerParameters({
+    firstName,
+    lastName,
+    postCode
+  }) {
     const lastCustomer = this.customersList.last();
 
     await expect(lastCustomer.locator('td').nth(0)).toHaveText(firstName);
     await expect(lastCustomer.locator('td').nth(1)).toHaveText(lastName);
     await expect(lastCustomer.locator('td').nth(2)).toHaveText(postCode);
-    await expect(lastCustomer.locator('td').nth(3)).toHaveCount(1);
+  }
+
+  async assertLastCustomerHasNoAccountNumber() {
+    const lastCustomer = this.customersList.last();
+
+    await expect(lastCustomer.locator('td').nth(3)).toHaveText('');
+  }
+
+  async assertLastCustomerHasAccountNumber(accountNumber) {
+    const lastCustomer = this.customersList.last();
+
+    await expect(lastCustomer.locator('td').nth(3)).toHaveText(accountNumber);
   }
 
   async deleteLastCustomer() {
@@ -28,7 +42,7 @@ export class CustomersListPage {
     await deleteButton.click();
   }
 
-  async assertCustomerIsAbsent(firstName, lastName, postCode) {
+  async assertCustomerIsAbsent({ firstName, lastName, postCode }) {
     const customer = this.customersList
       .filter({ hasText: firstName })
       .filter({ hasText: lastName })
@@ -38,7 +52,7 @@ export class CustomersListPage {
   }
 
   async reload() {
-    this.page.reload();
+    await this.page.reload();
   }
 
   async fillSearchField(value) {

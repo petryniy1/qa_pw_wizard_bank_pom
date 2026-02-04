@@ -28,7 +28,7 @@ export class AddCustomerPage {
     });
   }
 
-  async addFakeCustomer({ firstName, lastName, postCode }) {
+  async addCustomer({ firstName, lastName, postCode }) {
     await this.handleAlert();
 
     await this.firstName.fill(firstName);

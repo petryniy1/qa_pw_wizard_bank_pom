@@ -35,8 +35,9 @@ test('Assert manager can add new customer', async ({ page }) => {
   const customerData = generateCustomerData();
 
   await addCustPage.open();
-  await addCustPage.addFakeCustomer(customerData);
+  await addCustPage.addCustomer(customerData);
   await addCustPage.reload();
   await addCustPage.clickCustomersButton();
   await custList.assertLastCustomerParameters(customerData);
+  await custList.assertLastCustomerHasNoAccountNumber();
 });

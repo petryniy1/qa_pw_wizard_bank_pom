@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
   await addCustPage.reload();
 });
 
-test('Assert manager can search customer by First Name', async ({ page }) => {
+test('Assert manager can search customer by Postal Code', async ({ page }) => {
   /* 
   Test:
   1. Open Customers page.

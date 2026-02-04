@@ -17,10 +17,10 @@ test('Assert manager can choose currencies for account', async ({ page }) => {
   const openAccountPage = new OpenAccountPage(page);
 
   await openAccountPage.open();
-  await openAccountPage.selectCurrensyFromDrop('Dollar');
+  await openAccountPage.selectCurrencyFromDrop('Dollar');
   await openAccountPage.assertCurrensyValue('Dollar')
-  await openAccountPage.selectCurrensyFromDrop('Pound')
+  await openAccountPage.selectCurrencyFromDrop('Pound')
   await openAccountPage.assertCurrensyValue('Pound');
-  await openAccountPage.selectCurrensyFromDrop('Rupee');
+  await openAccountPage.selectCurrencyFromDrop('Rupee');
   await openAccountPage.assertCurrensyValue('Rupee');
 });

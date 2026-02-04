@@ -19,7 +19,7 @@ export class OpenAccountPage {
     await this.currencyDrop.selectOption({ label: currencyName });
   }
 
-  async assertCurrensyValue(currencyName) {
+  async assertCurrencyValue(currencyName) {
     await expect(this.currencyDrop.locator('option:checked'))
       .toHaveText(currencyName);
   }
